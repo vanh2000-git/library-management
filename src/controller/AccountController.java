@@ -29,7 +29,7 @@ public class AccountController {
             throw new InvalidInputException("Invalid password format. Password must be at least 8 characters, " +
                     "containing at least one uppercase letter, one lowercase letter, one number and one special character.");
         }
-        // ... (validate other inputs)
+        // ... (validate other inputs - bạn có thể thêm validate email ở đây)
 
         Account account = accountFactory.createAccount(type, username, password, name, email);
         dataManager.addAccount(account);
@@ -58,7 +58,7 @@ public class AccountController {
             throw new InvalidInputException("Invalid password format. Password must be at least 8 characters, " +
                     "containing at least one uppercase letter, one lowercase letter, one number and one special character.");
         }
-        // ... (validate other inputs)
+        // ... (validate other inputs - bạn có thể thêm validate email ở đây)
 
         if (newPassword != null) {
             account.setPassword(newPassword);
