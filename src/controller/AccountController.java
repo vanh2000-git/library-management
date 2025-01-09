@@ -21,7 +21,10 @@ public class AccountController {
 
     public void createAccount(String username, String password, String name, String email, String type)
             throws InvalidInputException {
-        // Validate input using regex
+        if (dataManager.findAccount(username) != null) {
+            throw new InvalidInputException("Username đã tồn tại.");
+        }
+
         if (!isValidUsername(username)) {
             throw new InvalidInputException("Invalid username format. Username must be 5-20 alphanumeric characters.");
         }
@@ -29,11 +32,20 @@ public class AccountController {
             throw new InvalidInputException("Invalid password format. Password must be at least 8 characters, " +
                     "containing at least one uppercase letter, one lowercase letter, one number and one special character.");
         }
-        // ... (validate other inputs - bạn có thể thêm validate email ở đây)
+        if (!isValidEmail(email)) { // Validate email
+            throw new InvalidInputException("Invalid email format.");
+        }
 
         Account account = accountFactory.createAccount(type, username, password, name, email);
         dataManager.addAccount(account);
         System.out.println("Tạo tài khoản thành công!");
+    }
+
+    private boolean isValidEmail(String email) {
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     public boolean login(String username, String password) {
@@ -58,7 +70,7 @@ public class AccountController {
             throw new InvalidInputException("Invalid password format. Password must be at least 8 characters, " +
                     "containing at least one uppercase letter, one lowercase letter, one number and one special character.");
         }
-        // ... (validate other inputs - bạn có thể thêm validate email ở đây)
+
 
         if (newPassword != null) {
             account.setPassword(newPassword);
@@ -70,7 +82,7 @@ public class AccountController {
             account.setEmail(newEmail);
         }
 
-        dataManager.saveAccounts(); // Lưu thay đổi vào file
+        dataManager.saveAccounts();
         System.out.println("Cập nhật tài khoản thành công!");
     }
 
