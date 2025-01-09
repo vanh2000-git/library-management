@@ -61,5 +61,43 @@ public class AccountController {
         }
     }
 
+    public void updateAccount(String username, String newPassword, String newName, String newEmail)
+            throws AccountNotFoundException, InvalidInputException {
+        Account account = dataManager.findAccount(username);
+        if (account == null) {
+            throw new AccountNotFoundException("Không tìm thấy tài khoản có username " + username);
+        }
+
+        // Validate input
+        if (newPassword != null && !isValidPassword(newPassword)) {
+            throw new InvalidInputException("Invalid password format.");
+        }
+        // ... (validate other inputs)
+
+        if (newPassword != null) {
+            account.setPassword(newPassword);
+        }
+        if (newName != null) {
+            account.setName(newName);
+        }
+        if (newEmail != null) {
+            account.setEmail(newEmail);
+        }
+
+        dataManager.saveAccounts(); // Lưu thay đổi vào file
+        System.out.println("Cập nhật tài khoản thành công!");
+    }
+
+    public void deleteAccount(String username) throws AccountNotFoundException {
+        Account account = dataManager.findAccount(username);
+        if (account == null) {
+            throw new AccountNotFoundException("Không tìm thấy tài khoản có username " + username);
+        }
+
+        dataManager.getAccounts().remove(username);
+        dataManager.saveAccounts(); // Lưu thay đổi vào file
+        System.out.println("Xóa tài khoản thành công!");
+    }
+
     // Other methods for account management (update, delete, ...)
 }

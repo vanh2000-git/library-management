@@ -9,6 +9,7 @@ import exception.InvalidInputException;
 import model.Account;
 import model.Librarian;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.Scanner;
 
 public class ConsoleView {
@@ -88,22 +89,51 @@ public class ConsoleView {
 
             switch (choice) {
                 case 1:
-                    // Gọi các phương thức của AccountController để quản lý tài khoản
+                    // Quản lý tài khoản
+                    System.out.println("1. Thêm tài khoản");
+                    System.out.println("2. Sửa tài khoản");
+                    System.out.println("3. Xóa tài khoản");
+                    System.out.println("4. Quay lại");
+                    System.out.print("Nhập lựa chọn: ");
+                    int accountChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    switch (accountChoice) {
+                        case 1:
+                            // Thêm tài khoản
+                            try {
+                                // ... (lấy thông tin tài khoản từ người dùng)
+                                accountController.createAccount(username, password, name, email, type);
+                            } catch (InvalidInputException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+                        case 2:
+                            // Sửa tài khoản
+                            try {
+                                // ... (lấy thông tin tài khoản từ người dùng)
+                                accountController.updateAccount(username, newPassword, newName, newEmail);
+                            } catch (AccountNotFoundException | InvalidInputException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+                        case 3:
+                            // Xóa tài khoản
+                            try {
+                                // ... (lấy username từ người dùng)
+                                accountController.deleteAccount(username);
+                            } catch (AccountNotFoundException e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+                        case 4:
+                            break; // Quay lại menu chính
+                        default:
+                            System.out.println("Lựa chọn không hợp lệ!");
+                    }
                     break;
-                case 2:
-                    // Gọi các phương thức của BookController để quản lý sách
-                    break;
-                case 3:
-                    // Gọi phương thức borrowBook() của LoanController
-                    break;
-                case 4:
-                    // Gọi phương thức returnBook() của LoanController
-                    break;
-                case 5:
-                    return; // Quay lại menu đăng nhập
-                default:
-                    System.out.println("Lựa chọn không hợp lệ!");
             }
+
         }
     }
 
