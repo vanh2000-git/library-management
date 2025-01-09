@@ -7,7 +7,7 @@ public class AccountFactory {
         } else if (type.equalsIgnoreCase("customer")) {
             return new Customer(username, password, name, email);
         } else {
-            return null; // Or throw an exception
+            return null;
         }
     }
 }

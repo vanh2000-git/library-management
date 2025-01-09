@@ -12,13 +12,11 @@ public class LoanReceipt extends LoanTemplate {
     protected void printBookDetails(Book book) {
         System.out.println("Tên sách: " + book.getTitle());
         System.out.println("Tác giả: " + book.getAuthor());
-        // ... other book details
     }
 
     @Override
     protected void printCustomerDetails(Customer customer) {
         System.out.println("Tên người mượn: " + customer.getName());
-        // ... other customer details
     }
 
     @Override

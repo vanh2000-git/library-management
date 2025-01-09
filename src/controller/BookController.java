@@ -15,9 +15,6 @@ public class BookController {
     }
 
     public void addBook(String bookId, String title, String author) {
-        // Kiểm tra đầu vào (có thể bổ sung thêm kiểm tra trùng mã sách)
-        // ...
-
         Book book = new Book(bookId, title, author);
         dataManager.addBook(book);
         System.out.println("Thêm sách thành công!");

@@ -2,6 +2,7 @@ package controller;
 
 import exception.AccountNotFoundException;
 import exception.InvalidInputException;
+
 import model.Account;
 import model.AccountFactory;
 import model.DataManager;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 public class AccountController {
     private DataManager dataManager;
     private AccountFactory accountFactory;
-    private Account currentAccount; // Biến lưu trữ tài khoản hiện tại
+    private Account currentAccount;
 
     public AccountController() {
         this.dataManager = DataManager.getInstance();
@@ -51,7 +52,7 @@ public class AccountController {
     public boolean login(String username, String password) {
         Account account = dataManager.findAccount(username);
         if (account != null && account.getPassword().equals(password)) {
-            currentAccount = account; // Lưu trữ thông tin người dùng hiện tại
+            currentAccount = account;
             return true;
         } else {
             return false;
@@ -65,7 +66,6 @@ public class AccountController {
             throw new AccountNotFoundException("Không tìm thấy tài khoản có username " + username);
         }
 
-        // Validate input
         if (newPassword != null && !isValidPassword(newPassword)) {
             throw new InvalidInputException("Invalid password format. Password must be at least 8 characters, " +
                     "containing at least one uppercase letter, one lowercase letter, one number and one special character.");
@@ -93,7 +93,7 @@ public class AccountController {
         }
 
         dataManager.getAccounts().remove(username);
-        dataManager.saveAccounts(); // Lưu thay đổi vào file
+        dataManager.saveAccounts();
         System.out.println("Xóa tài khoản thành công!");
     }
 
