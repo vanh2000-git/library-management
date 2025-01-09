@@ -48,7 +48,12 @@ public class DataManager {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ACCOUNT_FILE))) {
             accounts = (Map<String, Account>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            // Handle exception (e.g., create a new file if it doesn't exist)
+            File file = new File(ACCOUNT_FILE);
+            try{
+                file.createNewFile();
+            } catch (IOException ex) {
+                System.out.println("Lỗi khi tạo file accounts.dat: " + ex.getMessage());
+            }
         }
         return accounts;
     }
@@ -57,7 +62,7 @@ public class DataManager {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ACCOUNT_FILE))) {
             oos.writeObject(accounts);
         } catch (IOException e) {
-            // Handle exception
+            System.err.println("Lỗi khi lưu file accounts.dat: " + e.getMessage());
         }
     }
 
@@ -66,7 +71,12 @@ public class DataManager {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(BOOK_FILE))) {
             books = (Map<String, Book>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            // Handle exception (e.g., create a new file if it doesn't exist)
+            File file1 = new File(BOOK_FILE);
+            try{
+                file1.createNewFile();
+            } catch (IOException ex) {
+                System.out.println("Lỗi khi tạo file books.dat: " + ex.getMessage());
+            }
         }
         return books;
     }
@@ -75,7 +85,8 @@ public class DataManager {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(BOOK_FILE))) {
             oos.writeObject(books);
         } catch (IOException e) {
-            // Handle exception
+            System.err.println("Lỗi khi lưu file books.dat: " + e.getMessage());
         }
     }
+
 }

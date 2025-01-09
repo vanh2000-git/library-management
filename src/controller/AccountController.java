@@ -30,6 +30,7 @@ public class AccountController {
 
         Account account = accountFactory.createAccount(type, username, password, name, email);
         dataManager.addAccount(account);
+        System.out.println("Tạo tài khoản thành công!");
     }
 
     private boolean isValidUsername(String username) {
@@ -52,6 +53,12 @@ public class AccountController {
 
     public boolean login(String username, String password) {
         // ... (code to check if username and password match an account)
+        Account account = dataManager.findAccount(username);
+        if (account == null && account.getPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Other methods for account management (update, delete, ...)

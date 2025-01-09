@@ -39,6 +39,24 @@ public class LoanController {
 
     public void returnBook(String bookId, String username) throws LoanNotFoundException {
         // ... (code to return a book)
+        Loan loan = findLoan(bookId, username);
+        if (loan == null) {
+            throw new LoanNotFoundException("Không tìm thấy phiếu mượn");
+        }
+        loans.remove(loan);
+        Customer customer = loan.getCustomer();
+        customer.returnBook(loan.getBook());
+        System.out.println("Trả sách thành công!");
+    }
+
+    private Loan findLoan(String bookId, String username) {
+        for (Loan loan : loans) {
+            if (loan.getBook().getBookId().equals(bookId) &&
+                    loan.getCustomer().getUsername().equals(username)) {
+                return loan;
+            }
+        }
+        return null;
     }
 
     // Other methods for loan management
