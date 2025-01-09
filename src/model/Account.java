@@ -15,6 +15,7 @@ public class Account implements Serializable {
         this.email = email;
     }
 
+    // Getters and setters for all attributes
     public String getUsername() {
         return username;
     }

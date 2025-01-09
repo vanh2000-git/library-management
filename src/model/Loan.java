@@ -16,6 +16,7 @@ public class Loan implements Serializable {
         this.dueDate = borrowDate.plusWeeks(2); // Ví dụ: hạn trả sau 2 tuần
     }
 
+    // Getters and setters for all attributes
     public Book getBook() {
         return book;
     }

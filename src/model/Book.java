@@ -13,6 +13,7 @@ public class Book implements Serializable {
         this.author = author;
     }
 
+    // Getters and setters for all attributes
     public String getBookId() {
         return bookId;
     }

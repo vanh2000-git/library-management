@@ -35,17 +35,18 @@ public class LoanController {
         // In phiếu mượn
         LoanReceipt loanReceipt = new LoanReceipt();
         loanReceipt.printLoan(loan);
+        System.out.println("Mượn sách thành công!");
     }
 
     public void returnBook(String bookId, String username) throws LoanNotFoundException {
-        // ... (code to return a book)
         Loan loan = findLoan(bookId, username);
         if (loan == null) {
-            throw new LoanNotFoundException("Không tìm thấy phiếu mượn");
+            throw new LoanNotFoundException("Không tìm thấy phiếu mượn.");
         }
+
         loans.remove(loan);
         Customer customer = loan.getCustomer();
-        customer.returnBook(loan.getBook());
+        customer.returnBook(loan.getBook()); // Cập nhật danh sách sách mượn của khách hàng
         System.out.println("Trả sách thành công!");
     }
 
@@ -58,6 +59,4 @@ public class LoanController {
         }
         return null;
     }
-
-    // Other methods for loan management
 }
