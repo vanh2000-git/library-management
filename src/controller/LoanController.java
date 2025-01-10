@@ -29,7 +29,7 @@ public class LoanController {
         }
 
         Loan loan = new Loan(book, customer);
-        loans.add(loan);
+        dataManager.getLoans().add(loan);
         customer.borrowBook(book); // Cập nhật danh sách sách mượn của khách hàng
 
         // In phiếu mượn

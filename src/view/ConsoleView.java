@@ -8,11 +8,7 @@ import exception.BookNotFoundException;
 import exception.CustomerNotFoundException;
 import exception.InvalidInputException;
 import exception.LoanNotFoundException;
-import model.Account;
-import model.Book;
-import model.Customer;
-import model.DataManager;
-import model.Librarian;
+import model.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -33,9 +29,7 @@ public class ConsoleView {
     }
 
     public void run() {
-        // Kiểm tra xem đã có tài khoản nào chưa
         if (dataManager.getAccounts().isEmpty()) {
-            // Tạo tài khoản Librarian mặc định
             try {
                 accountController.createAccount("admin", "Admin@123", "Admin", "admin@example.com", "librarian");
             } catch (InvalidInputException e) {
@@ -96,7 +90,8 @@ public class ConsoleView {
             System.out.println("*     2. Quản lý sách                *");
             System.out.println("*     3. Cho mượn sách              *");
             System.out.println("*     4. Nhận trả sách                *");
-            System.out.println("*     5. Đăng xuất                   *");
+            System.out.println("*     5. Xem danh sách phiếu mượn   *");
+            System.out.println("*     6. Đăng xuất                   *");
             System.out.println("****************************************");
             System.out.print("Nhập lựa chọn: ");
 
@@ -113,7 +108,7 @@ public class ConsoleView {
                     System.out.println("5. Quay lại");
                     System.out.print("Nhập lựa chọn: ");
                     int accountChoice = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine();
 
                     switch (accountChoice) {
                         case 1:
@@ -266,13 +261,30 @@ public class ConsoleView {
                     }
                     break;
                 case 5:
+                    // Hiển thị danh sách phiếu mượn
+                    displayLoanList();
+                    break;
+                case 6:
                     return; // Quay lại menu đăng nhập
                 default:
                     System.out.println("Lựa chọn không hợp lệ!");
             }
         }
     }
-
+    private void displayLoanList() {
+        List<Loan> allLoans = dataManager.getLoans(); // Lấy danh sách tất cả phiếu mượn từ DataManager
+        if (allLoans.isEmpty()) {
+            System.out.println("Chưa có phiếu mượn nào.");
+        } else {
+            System.out.println("Danh sách tất cả phiếu mượn:");
+            for (Loan loan : allLoans) {
+                System.out.println("- " + loan.getBook().getTitle()
+                        + " - " + loan.getCustomer().getName()
+                        + " - " + loan.getBorrowDate()
+                        + " - " + loan.getDueDate());
+            }
+        }
+    }
     private void displayCustomerMenu() {
         while (true) {
             System.out.println("****************************************");

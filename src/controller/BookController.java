@@ -27,8 +27,7 @@ public class BookController {
             throw new BookNotFoundException("Không tìm thấy sách có mã " + bookId);
         }
 
-        // Kiểm tra đầu vào
-        // ...
+
 
         if (newTitle != null) {
             book.setTitle(newTitle);
@@ -36,7 +35,6 @@ public class BookController {
         if (newAuthor != null) {
             book.setAuthor(newAuthor);
         }
-        // ... (cập nhật các thuộc tính khác)
 
         dataManager.saveBooks(); // Lưu thay đổi vào file
         System.out.println("Cập nhật sách thành công!");
